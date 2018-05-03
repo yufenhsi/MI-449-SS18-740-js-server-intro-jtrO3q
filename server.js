@@ -1,5 +1,6 @@
 // Require Node's http module and assign it to a variable
 var http = require('http')
+var url = require('url')
 
 // Create a new server that just says "Hi!!" at every route
 var server = http.createServer(function (request, response) {
@@ -17,7 +18,8 @@ var server = http.createServer(function (request, response) {
   } else if (request.url === '/cuteness') {
     response.end('<h1>Pictures</h1>' + '<img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA5Ny8wNzQvb3JpZ2luYWwvbW9ua2V5LWNvdW50aW5nLmpwZw==" alt="Waving hi">' + '<a href="/">Back to Homepage</a>')
   } else {
-    response.end('<h1>Page Not Found</h1>' + 'The requested URL /secret-plan-to-take-over-the-world was not found on this server.' + '<a href="/">Back to Homepage</a>')
+    var pathName = url.parse(request.url).pathname
+    response.end('<h1>Page Not Found</h1>' + 'The requested URL ' + pathName + ' was not found on this server.' + '<a href="/">Back to Homepage</a>')
   }
 })
 
